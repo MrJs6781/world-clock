@@ -17,7 +17,7 @@ const TimeSettings: React.FC<TimeSettingsProps> = ({
   setShowSeconds,
 }) => {
   return (
-    <Card className="bg-gray-800 border-gray-700">
+    <Card>
       <CardContent className="p-4">
         <div className="flex flex-wrap gap-6 items-center">
           <div className="flex items-center space-x-2">
@@ -26,9 +26,7 @@ const TimeSettings: React.FC<TimeSettingsProps> = ({
               checked={is24HourFormat}
               onCheckedChange={setIs24HourFormat}
             />
-            <Label htmlFor="format-switch" className="text-white">
-              24-hour format
-            </Label>
+            <Label htmlFor="format-switch">24-hour format</Label>
           </div>
 
           <div className="flex items-center space-x-2">
@@ -37,9 +35,7 @@ const TimeSettings: React.FC<TimeSettingsProps> = ({
               checked={showSeconds}
               onCheckedChange={setShowSeconds}
             />
-            <Label htmlFor="seconds-switch" className="text-white">
-              Show seconds
-            </Label>
+            <Label htmlFor="seconds-switch">Show seconds</Label>
           </div>
         </div>
       </CardContent>

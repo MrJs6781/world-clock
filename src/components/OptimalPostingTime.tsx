@@ -24,12 +24,15 @@ const OptimalPostingTime: React.FC<OptimalPostingTimeProps> = ({
     let maxAwakeCount = 0;
     let bestCoverage = 0;
 
+    // Get the browser's timezone offset in hours
+    const localOffset = currentTime.getTimezoneOffset() / -60;
+
     for (let hour = 0; hour < 24; hour++) {
       let awakeCount = 0;
 
       for (const timezone of selectedTimezones) {
-        const localOffset = new Date().getTimezoneOffset() / 60;
-        const targetHour = (hour - localOffset + timezone.offset + 24) % 24;
+        // Calculate what time it is in this timezone when it's the current hour locally
+        const targetHour = (hour + timezone.offset - localOffset + 24) % 24;
 
         // Check if target hour is in business hours (9 AM - 5 PM)
         if (targetHour >= 9 && targetHour <= 17) {
@@ -103,7 +106,8 @@ const OptimalPostingTime: React.FC<OptimalPostingTimeProps> = ({
             <div className="flex flex-col items-center md:items-end">
               <div className="flex items-center gap-3 mb-1">
                 <Badge
-                  className={`bg-${coverageQuality.color}-500/20 text-white border-0`}
+                  className="bg-white/20 text-white border-0"
+                  variant="outline"
                 >
                   {coverageQuality.text} ({optimal.coverage}%)
                 </Badge>

@@ -22,10 +22,17 @@ const TimezoneCard: React.FC<TimezoneCardProps> = ({
 }) => {
   // Get time for this timezone
   const getTimezoneTime = () => {
-    const date = new Date(currentTime);
-    const localOffset = date.getTimezoneOffset() * 60000;
-    const targetOffset = timezone.offset * 3600000;
-    return new Date(date.getTime() + localOffset + targetOffset);
+    // Create a new date object based on the current time
+    const utc = new Date(currentTime);
+
+    // Convert to UTC by adding the local time offset
+    utc.setMinutes(utc.getMinutes() + utc.getTimezoneOffset());
+
+    // Create a new date object with the target timezone offset applied
+    const targetTime = new Date(utc);
+    targetTime.setHours(utc.getHours() + timezone.offset);
+
+    return targetTime;
   };
 
   const timezoneTime = getTimezoneTime();
@@ -71,12 +78,14 @@ const TimezoneCard: React.FC<TimezoneCardProps> = ({
   const getTimeDifference = () => {
     const localTime = new Date(currentTime);
     const localHours = localTime.getHours();
-    const diffHours = hours - localHours;
+    const timeDiff = Math.round(
+      timezone.offset + localTime.getTimezoneOffset() / 60
+    );
 
-    if (diffHours === 0) return "Same as local time";
+    if (timeDiff === 0) return "Same as local time";
 
-    const sign = diffHours > 0 ? "+" : "";
-    return `${sign}${diffHours} hours from local`;
+    const sign = timeDiff > 0 ? "+" : "";
+    return `${sign}${timeDiff} hours from local`;
   };
 
   return (
@@ -88,11 +97,12 @@ const TimezoneCard: React.FC<TimezoneCardProps> = ({
       className="h-full"
     >
       <Card
-        className={`h-full hover-lift ${
+        className={`h-full hover-lift relative overflow-hidden ${
           isDaytime ? "day-indicator" : "night-indicator"
-        } bg-opacity-5 border-2`}
+        }`}
       >
-        <CardContent className="p-6 relative h-full flex flex-col">
+        <div className="absolute inset-0 opacity-10 z-0"></div>
+        <CardContent className="p-6 relative h-full flex flex-col z-10">
           <Button
             variant="ghost"
             size="icon"
@@ -130,8 +140,10 @@ const TimezoneCard: React.FC<TimezoneCardProps> = ({
 
             <div className="mt-4">
               <span
-                className={`status-badge ${
-                  isDaytime ? "status-badge-green" : "status-badge-blue"
+                className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${
+                  isDaytime
+                    ? "bg-green-100 text-green-800 dark:bg-green-800 dark:text-green-100"
+                    : "bg-blue-100 text-blue-800 dark:bg-blue-800 dark:text-blue-100"
                 }`}
               >
                 {isDaytime ? "Day" : "Night"} • {getTimeDifference()}

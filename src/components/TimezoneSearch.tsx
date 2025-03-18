@@ -30,17 +30,38 @@ const TimezoneSearch: React.FC<TimezoneSearchProps> = ({
       return;
     }
 
+    const searchTermLower = searchTerm.toLowerCase();
+
     const filtered = allTimezones
       .filter(
         (tz) => !selectedTimezones.some((selected) => selected.id === tz.id)
       )
       .filter(
         (tz) =>
-          tz.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-          tz.formattedName.toLowerCase().includes(searchTerm.toLowerCase()) ||
-          tz.countryCode.toLowerCase().includes(searchTerm.toLowerCase())
+          tz.name.toLowerCase().includes(searchTermLower) ||
+          tz.formattedName.toLowerCase().includes(searchTermLower) ||
+          tz.countryCode.toLowerCase().includes(searchTermLower)
       )
-      .slice(0, 6); // Limit results to prevent overwhelming the UI
+      // Sort results by relevance
+      .sort((a, b) => {
+        // Exact matches should come first
+        const aNameExact = a.name.toLowerCase() === searchTermLower;
+        const bNameExact = b.name.toLowerCase() === searchTermLower;
+
+        if (aNameExact && !bNameExact) return -1;
+        if (!aNameExact && bNameExact) return 1;
+
+        // Then sort by whether the search term is at the start of the name
+        const aNameStart = a.name.toLowerCase().startsWith(searchTermLower);
+        const bNameStart = b.name.toLowerCase().startsWith(searchTermLower);
+
+        if (aNameStart && !bNameStart) return -1;
+        if (!aNameStart && bNameStart) return 1;
+
+        // Then alphabetically
+        return a.name.localeCompare(b.name);
+      })
+      .slice(0, 10); // Show more results but not too many
 
     setFilteredTimezones(filtered);
   }, [searchTerm, selectedTimezones, allTimezones]);
@@ -83,7 +104,7 @@ const TimezoneSearch: React.FC<TimezoneSearchProps> = ({
   };
 
   return (
-    <Card className="border-2 bg-card/50 backdrop-blur-sm">
+    <Card className="border bg-card/50 backdrop-blur-sm">
       <CardContent className="p-4">
         <div className="relative">
           <div className="relative flex items-center">
@@ -91,7 +112,7 @@ const TimezoneSearch: React.FC<TimezoneSearchProps> = ({
             <Input
               ref={inputRef}
               type="text"
-              placeholder="Search for a city or timezone..."
+              placeholder="Search for a city or country..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
               onFocus={() => setIsFocused(true)}
@@ -107,7 +128,7 @@ const TimezoneSearch: React.FC<TimezoneSearchProps> = ({
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -10 }}
                 transition={{ duration: 0.2 }}
-                className="absolute z-10 mt-1 w-full bg-popover rounded-md shadow-lg max-h-60 overflow-auto glass-effect"
+                className="absolute z-10 mt-1 w-full bg-popover rounded-md shadow-lg max-h-80 overflow-auto"
               >
                 {filteredTimezones.map((timezone) => (
                   <motion.div

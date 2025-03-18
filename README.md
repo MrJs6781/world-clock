@@ -1,36 +1,100 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# World Clock & Social Media Posting Time Optimizer
+
+![World Clock Banner](https://via.placeholder.com/1200x300/4F46E5/FFFFFF?text=World+Clock)
+
+A comprehensive world clock application with social media posting time optimization. Easily track time across multiple regions, find optimal posting times for various social media platforms, and view timezones grouped by geographic regions.
+
+## Features
+
+### ⏰ Multi-timezone Dashboard
+
+- Track time across multiple regions simultaneously
+- Beautiful day/night indicators for each timezone
+- Add any country or city from a comprehensive database
+
+### 🌎 World Map View
+
+- View all countries grouped by geographic regions
+- Browse through America, Europe, Asia, Africa, and Oceania
+- Add countries directly from the world map
+
+### 📊 Optimal Posting Time
+
+- Get intelligent suggestions for the best time to post on social media
+- Platform-specific recommendations for LinkedIn, Twitter, Instagram, and Facebook
+- Indicates which specific countries will be in active hours
+- Shows the next upcoming optimal posting time based on your current time
+
+### 🌓 Theme Support
+
+- Beautiful light and dark modes
+- Automatic theme detection based on system preferences
+- Manual theme toggle
+
+### ⚙️ Customization
+
+- Toggle between 12-hour and 24-hour time formats
+- Show or hide seconds
+- Responsive design for all device sizes
 
 ## Getting Started
 
-First, run the development server:
-
 ```bash
+# Clone the repository
+git clone https://github.com/yourusername/world-clock.git
+
+# Navigate to the project directory
+cd world-clock
+
+# Install dependencies
+npm install
+
+# Start the development server
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000) in your browser to see the application.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Built With
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- [Next.js](https://nextjs.org/) - React framework
+- [TypeScript](https://www.typescriptlang.org/) - Type safety
+- [Tailwind CSS](https://tailwindcss.com/) - Styling
+- [Framer Motion](https://www.framer.com/motion/) - Animations
+- [Radix UI](https://www.radix-ui.com/) - UI components
+- [Lucide Icons](https://lucide.dev/) - Beautiful icons
 
-## Learn More
+## Usage Examples
 
-To learn more about Next.js, take a look at the following resources:
+### Adding a Timezone
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+1. Use the search box to find a city or country
+2. Click the "+" button to add it to your dashboard
+3. The timezone will appear in your dashboard view
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+### Finding Optimal Posting Times
 
-## Deploy on Vercel
+1. Add the timezones that represent your target audience
+2. Navigate to the Social Media Suggestions section
+3. Select the social platform you're interested in
+4. View the next optimal posting time and the countries that will be active
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+### Using the World Map
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+1. Click on the "All Countries" tab
+2. Browse through regions by expanding/collapsing sections
+3. Add countries directly from the world map view
+
+## Contributing
+
+Contributions are welcome! Please feel free to submit a Pull Request.
+
+1. Fork the repository
+2. Create your feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add some amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details.
