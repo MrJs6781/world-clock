@@ -1,0 +1,150 @@
+import { Timezone } from "@/types/timezone";
+
+// List of popular timezones with their UTC offsets
+export const popularTimezones: Timezone[] = [
+  {
+    id: "us-ny",
+    name: "New York",
+    countryCode: "US",
+    offset: -4,
+    formattedName: "New York (EDT)",
+  },
+  {
+    id: "us-sf",
+    name: "San Francisco",
+    countryCode: "US",
+    offset: -7,
+    formattedName: "San Francisco (PDT)",
+  },
+  {
+    id: "gb-ldn",
+    name: "London",
+    countryCode: "GB",
+    offset: 1,
+    formattedName: "London (BST)",
+  },
+  {
+    id: "in-del",
+    name: "New Delhi",
+    countryCode: "IN",
+    offset: 5.5,
+    formattedName: "New Delhi (IST)",
+  },
+  {
+    id: "jp-tok",
+    name: "Tokyo",
+    countryCode: "JP",
+    offset: 9,
+    formattedName: "Tokyo (JST)",
+  },
+  {
+    id: "au-syd",
+    name: "Sydney",
+    countryCode: "AU",
+    offset: 10,
+    formattedName: "Sydney (AEST)",
+  },
+  {
+    id: "de-ber",
+    name: "Berlin",
+    countryCode: "DE",
+    offset: 2,
+    formattedName: "Berlin (CEST)",
+  },
+  {
+    id: "br-sp",
+    name: "São Paulo",
+    countryCode: "BR",
+    offset: -3,
+    formattedName: "São Paulo (BRT)",
+  },
+  {
+    id: "ae-dub",
+    name: "Dubai",
+    countryCode: "AE",
+    offset: 4,
+    formattedName: "Dubai (GST)",
+  },
+  {
+    id: "sg-sin",
+    name: "Singapore",
+    countryCode: "SG",
+    offset: 8,
+    formattedName: "Singapore (SGT)",
+  },
+];
+
+// Add more timezones that will be searchable
+export const allTimezones: Timezone[] = [
+  ...popularTimezones,
+  {
+    id: "ca-tor",
+    name: "Toronto",
+    countryCode: "CA",
+    offset: -4,
+    formattedName: "Toronto (EDT)",
+  },
+  {
+    id: "cn-sha",
+    name: "Shanghai",
+    countryCode: "CN",
+    offset: 8,
+    formattedName: "Shanghai (CST)",
+  },
+  {
+    id: "ru-mos",
+    name: "Moscow",
+    countryCode: "RU",
+    offset: 3,
+    formattedName: "Moscow (MSK)",
+  },
+  {
+    id: "fr-par",
+    name: "Paris",
+    countryCode: "FR",
+    offset: 2,
+    formattedName: "Paris (CEST)",
+  },
+  {
+    id: "za-jnb",
+    name: "Johannesburg",
+    countryCode: "ZA",
+    offset: 2,
+    formattedName: "Johannesburg (SAST)",
+  },
+  {
+    id: "mx-mex",
+    name: "Mexico City",
+    countryCode: "MX",
+    offset: -5,
+    formattedName: "Mexico City (CDT)",
+  },
+  {
+    id: "id-jkt",
+    name: "Jakarta",
+    countryCode: "ID",
+    offset: 7,
+    formattedName: "Jakarta (WIB)",
+  },
+  {
+    id: "kr-sel",
+    name: "Seoul",
+    countryCode: "KR",
+    offset: 9,
+    formattedName: "Seoul (KST)",
+  },
+  {
+    id: "it-rom",
+    name: "Rome",
+    countryCode: "IT",
+    offset: 2,
+    formattedName: "Rome (CEST)",
+  },
+  {
+    id: "tr-ist",
+    name: "Istanbul",
+    countryCode: "TR",
+    offset: 3,
+    formattedName: "Istanbul (TRT)",
+  },
+];

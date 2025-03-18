@@ -1,103 +1,147 @@
-import Image from "next/image";
+"use client";
+
+import React, { useState, useEffect } from "react";
+import { motion } from "framer-motion";
+import { popularTimezones, allTimezones } from "@/data/timezones";
+import { Timezone } from "@/types/timezone";
+import TimezoneCard from "@/components/TimezoneCard";
+import TimeSettings from "@/components/TimeSettings";
+import TimezoneSearch from "@/components/TimezoneSearch";
+import OptimalPostingTime from "@/components/OptimalPostingTime";
+import { MoonStar, Sun } from "lucide-react";
+import { useTheme } from "next-themes";
+import { Button } from "@/components/ui/button";
 
 export default function Home() {
-  return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm/6 text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-[family-name:var(--font-geist-mono)] font-semibold">
-              src/app/page.tsx
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
+  const [selectedTimezones, setSelectedTimezones] = useState<Timezone[]>(
+    popularTimezones.slice(0, 6)
+  );
+  const [currentTime, setCurrentTime] = useState(new Date());
+  const [is24HourFormat, setIs24HourFormat] = useState(false);
+  const [showSeconds, setShowSeconds] = useState(true);
+  const [isMounted, setIsMounted] = useState(false);
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
+  const { theme, setTheme } = useTheme();
+
+  // Update time every second
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentTime(new Date());
+    }, 1000);
+
+    return () => clearInterval(interval);
+  }, []);
+
+  // Theme needs to be client-side only
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
+
+  // Add a timezone to selected
+  const addTimezone = (timezone: Timezone) => {
+    setSelectedTimezones((prev) => [...prev, timezone]);
+  };
+
+  // Remove a timezone from selected
+  const removeTimezone = (timezoneId: string) => {
+    setSelectedTimezones((prev) => prev.filter((tz) => tz.id !== timezoneId));
+  };
+
+  // Toggle theme
+  const toggleTheme = () => {
+    if (theme === "dark") {
+      setTheme("light");
+    } else {
+      setTheme("dark");
+    }
+  };
+
+  return (
+    <div className="min-h-screen bg-background">
+      <div className="container mx-auto px-4 py-8">
+        <header className="mb-8 relative">
+          <div className="flex flex-col md:flex-row justify-between items-center mb-4">
+            <motion.div
+              initial={{ opacity: 0, x: -20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.5 }}
+            >
+              <h1 className="text-4xl font-bold text-gradient">World Clock</h1>
+              <p className="text-muted-foreground">
+                Track time across multiple regions for optimal posting
+              </p>
+            </motion.div>
+
+            {isMounted && (
+              <Button
+                variant="outline"
+                size="icon"
+                className="h-10 w-10 rounded-full"
+                onClick={toggleTheme}
+              >
+                {theme === "dark" ? (
+                  <Sun className="h-5 w-5" />
+                ) : (
+                  <MoonStar className="h-5 w-5" />
+                )}
+              </Button>
+            )}
+          </div>
+
+          <div className="flex flex-col md:flex-row gap-4">
+            <div className="md:flex-1">
+              <TimezoneSearch
+                allTimezones={allTimezones}
+                selectedTimezones={selectedTimezones}
+                onAddTimezone={addTimezone}
+              />
+            </div>
+            <div className="flex-shrink-0">
+              <TimeSettings
+                is24HourFormat={is24HourFormat}
+                setIs24HourFormat={setIs24HourFormat}
+                showSeconds={showSeconds}
+                setShowSeconds={setShowSeconds}
+              />
+            </div>
+          </div>
+        </header>
+
+        {selectedTimezones.length > 0 && (
+          <div className="mb-6">
+            <OptimalPostingTime
+              selectedTimezones={selectedTimezones}
+              currentTime={currentTime}
+              is24HourFormat={is24HourFormat}
             />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+          </div>
+        )}
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+          {selectedTimezones.map((timezone) => (
+            <TimezoneCard
+              key={timezone.id}
+              timezone={timezone}
+              is24HourFormat={is24HourFormat}
+              showSeconds={showSeconds}
+              onRemove={removeTimezone}
+              currentTime={currentTime}
+            />
+          ))}
         </div>
-      </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
+
+        {selectedTimezones.length === 0 && (
+          <div className="text-center py-12">
+            <p className="text-muted-foreground">
+              Search and add timezones to get started
+            </p>
+          </div>
+        )}
+
+        <footer className="mt-12 text-center text-muted-foreground text-sm">
+          <p>Created with Next.js, TypeScript, TailwindCSS & Framer Motion</p>
+        </footer>
+      </div>
     </div>
   );
 }
