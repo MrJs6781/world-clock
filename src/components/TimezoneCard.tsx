@@ -1,5 +1,5 @@
 // Remove useState and useEffect if not being used
-import React from 'react'
+import React from "react";
 import { motion } from "framer-motion";
 import { Card, CardContent } from "@/components/ui/card";
 import { X } from "lucide-react";
@@ -78,7 +78,7 @@ const TimezoneCard: React.FC<TimezoneCardProps> = ({
   // Get time difference relative to local time
   const getTimeDifference = () => {
     const localTime = new Date(currentTime);
-    const localHours = localTime.getHours();
+    // const localHours = localTime.getHours();
     const timeDiff = Math.round(
       timezone.offset + localTime.getTimezoneOffset() / 60
     );

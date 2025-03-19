@@ -10,7 +10,7 @@ import TimezoneSearch from "@/components/TimezoneSearch";
 import OptimalPostingTime from "@/components/OptimalPostingTime";
 import SocialMediaSuggestions from "@/components/SocialMediaSuggestions";
 import WorldMap from "@/components/WorldMap";
-import { MoonStar, Sun, List, Grid, Filter, Globe } from "lucide-react";
+import { MoonStar, Sun, Grid, Filter, Globe } from "lucide-react";
 import { useTheme } from "next-themes";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
