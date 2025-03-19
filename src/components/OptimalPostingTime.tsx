@@ -2,7 +2,7 @@ import React from "react";
 import { motion } from "framer-motion";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Clock, Globe, BarChart } from "lucide-react";
+import { Clock, Globe } from "lucide-react";
 import { Timezone } from "@/types/timezone";
 
 interface OptimalPostingTimeProps {
