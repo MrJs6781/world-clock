@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from "react";
+// Remove useState and useEffect if not being used
+import React from 'react'
 import { motion } from "framer-motion";
 import { Card, CardContent } from "@/components/ui/card";
 import { X } from "lucide-react";
